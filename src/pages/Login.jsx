@@ -1,15 +1,26 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Flash from '../assets/flash.png'
-import { loginUser } from '../features/user/actions'
+import { loginUser, insertUser } from '../features/user/actions'
+
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 
 const Login = () => {
   const dispatch = useDispatch()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const [loading, setLoading] = useState(false)
+  const [newUserEmail, setNewUserEmail] = useState('')
+  const [newUserPassword, setNewUserPassword] = useState('') 
+  console.log('new', newUserEmail)
+  console.log('new', newUserPassword)
 
   const submit = (e) => {
     e.preventDefault()
@@ -17,18 +28,34 @@ const Login = () => {
     dispatch(loginUser({ email, password })).finally(() => setLoading(false))
   }
 
+  const NewUserSubmit = (e) => {
+    e.preventDefault()
+  
+    dispatch(insertUser({ email: newUserEmail, password :newUserPassword }))
+  }
+
+  const [open, setOpen] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
-    <section className="flex w-full h-screen bg-white overflow-hidden">
+    <section className="flex w-full h-screen bg-white">
       <div className="w-full lg:w-[50%] px-[10%] h-full flex flex-col items-center justify-center">
         <div className="text-center">
-          <img className="mx-auto w-48" src={Flash} alt="logo" />
-          <h4 className="text-xl font-semibold mt-1 mb-12 pb-1">
+          <img className="mx-auto w-40" src={Flash} alt="logo" />
+          <h4 className="text-xl font-semibold mt-1 mb-6 pb-1">
             Gestion des contacts
           </h4>
         </div>
         <form className="w-full" onSubmit={submit}>
-          <p className="mb-4">Veuillez-vous connecter</p>
-          <div className="mb-4">
+          <p className="mb-2">Veuillez-vous connecter</p>
+          <div className="mb-2">
             <input
               type="email"
               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -39,7 +66,7 @@ const Login = () => {
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-2">
             <input
               type="password"
               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -50,7 +77,7 @@ const Login = () => {
               required
             />
           </div>
-          <div className="text-center pt-1 mb-12 pb-1">
+          <div className="text-center pt-1 mb-4 pb-1">
             {loading ? (
               <div role="status" className="flex items-center justify-center">
                 <svg
@@ -73,7 +100,7 @@ const Login = () => {
               </div>
             ) : (
               <button
-                className="inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
+                className="inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full "
                 type="submit"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
@@ -92,6 +119,61 @@ const Login = () => {
             )}
           </div>
         </form>
+
+        <div>
+          <button
+            onClick={handleClickOpen}
+            className="inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full "
+            type="submit"
+            data-mdb-ripple="true"
+            data-mdb-ripple-color="light"
+            style={{
+              background: `linear-gradient(
+                    to right,
+                    #ee7724,
+                    #d8363a,
+                    #dd3675,
+                    #b44593
+                  )`,
+            }}
+          >
+            S'Enregistrer
+          </button>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>S'enregistrer</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Email"
+                type="email"
+                value={newUserEmail}
+                onChange={(e) => setNewUserEmail(e.target.value)}
+                required
+                fullWidth
+                variant="standard"
+              />
+
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Mot de passe"
+                type="password"
+                value={newUserPassword}
+                onChange={(e) => setNewUserPassword(e.target.value)}
+                required
+                fullWidth
+                variant="standard"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Fermer</Button>
+              <Button onClick={NewUserSubmit}>Valider</Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
       <div
         className="w-[50%] hidden lg:flex items-center"

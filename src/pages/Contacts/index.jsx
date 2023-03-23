@@ -24,6 +24,9 @@ import { useDisclosure } from '@mantine/hooks'
 import AddContact from './AddContact'
 import { toast } from 'react-toastify'
 import { CircularProgress } from '@mui/material'
+import Flash from '../../assets/flash.png'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import { isInline } from '../../features/user/actions'
 
 const Contacts = () => {
   const {
@@ -38,7 +41,6 @@ const Contacts = () => {
   const [opened, { open, close }] = useDisclosure(false)
   const inputFile = useRef()
   const inputExport = useRef()
-
   const dispatch = useDispatch()
   const submitFile = (e) => {
     if (!e.target.files) return
@@ -57,6 +59,10 @@ const Contacts = () => {
       setLoading(false)
       toast.info('Nettoyage terminé')
     })
+  }
+
+  const inline = () => {
+    dispatch(isInline()).finally()
   }
 
   const exportFile = (e) => {
@@ -109,7 +115,15 @@ const Contacts = () => {
   }, [searchText])
 
   return (
-    <div className="p-4">
+    <div className="p-1">
+      <div className="flex items-center justify-between">
+        <img className="w-10" src={Flash} />
+        <div>
+          <AccountCircle onClick={inline} />
+        </div>
+      </div>
+      <hr className="mb-4" />
+
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold">
           <FontAwesomeIcon icon={faContactBook} color="blue" className="mr-4" />
