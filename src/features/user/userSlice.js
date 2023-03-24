@@ -3,6 +3,7 @@ import { loginUser, insertUser, isInline } from './actions'
 
 const initialState = {
   authenticated: false,
+  email: '',
   token: null,
 }
 
@@ -18,9 +19,10 @@ export const userSlice = createSlice({
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
         state.authenticated = true
-        const { access_token } = action.payload
-        console.log(action.payload);
+        const { access_token, user } = action.payload
+        console.log(action.payload)
         state.token = access_token
+        state.email = user.email
         localStorage.setItem('token', access_token)
       })
       .addCase(insertUser.fulfilled, (state, action) => {

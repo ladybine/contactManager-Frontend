@@ -1,15 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Flash from '../assets/flash.png'
-import { loginUser, insertUser } from '../features/user/actions'
-
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
+import { loginUser } from '../features/user/actions'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -17,31 +9,11 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const [newUserEmail, setNewUserEmail] = useState('')
-  const [newUserPassword, setNewUserPassword] = useState('') 
-  console.log('new', newUserEmail)
-  console.log('new', newUserPassword)
 
   const submit = (e) => {
     e.preventDefault()
     setLoading(true)
     dispatch(loginUser({ email, password })).finally(() => setLoading(false))
-  }
-
-  const NewUserSubmit = (e) => {
-    e.preventDefault()
-  
-    dispatch(insertUser({ email: newUserEmail, password :newUserPassword }))
-  }
-
-  const [open, setOpen] = useState(false)
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
   }
 
   return (
@@ -119,61 +91,6 @@ const Login = () => {
             )}
           </div>
         </form>
-
-        <div>
-          <button
-            onClick={handleClickOpen}
-            className="inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full "
-            type="submit"
-            data-mdb-ripple="true"
-            data-mdb-ripple-color="light"
-            style={{
-              background: `linear-gradient(
-                    to right,
-                    #ee7724,
-                    #d8363a,
-                    #dd3675,
-                    #b44593
-                  )`,
-            }}
-          >
-            S'Enregistrer
-          </button>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>S'enregistrer</DialogTitle>
-            <DialogContent>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Email"
-                type="email"
-                value={newUserEmail}
-                onChange={(e) => setNewUserEmail(e.target.value)}
-                required
-                fullWidth
-                variant="standard"
-              />
-
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Mot de passe"
-                type="password"
-                value={newUserPassword}
-                onChange={(e) => setNewUserPassword(e.target.value)}
-                required
-                fullWidth
-                variant="standard"
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Fermer</Button>
-              <Button onClick={NewUserSubmit}>Valider</Button>
-            </DialogActions>
-          </Dialog>
-        </div>
       </div>
       <div
         className="w-[50%] hidden lg:flex items-center"

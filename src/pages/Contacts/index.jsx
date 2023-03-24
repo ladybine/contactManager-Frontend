@@ -19,14 +19,25 @@ import {
 import { searchContact } from '../../features/contacts/contactsSlice'
 import { useEffect, useRef, useState } from 'react'
 import Search from './Search'
-import { Drawer } from '@mantine/core'
+import { Drawer, Menu, Button, Text } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import AddContact from './AddContact'
 import { toast } from 'react-toastify'
-import { CircularProgress } from '@mui/material'
+import {
+  CircularProgress,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContentText,
+  DialogContent,
+  DialogTitle,
+} from '@mui/material'
 import Flash from '../../assets/flash.png'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import { isInline } from '../../features/user/actions'
+import { Logout, PersonAdd } from '@mui/icons-material'
+import { insertUser } from '../../features/user/actions'
+import { logout } from '../../features/user/userSlice'
 
 const Contacts = () => {
   const {
@@ -35,6 +46,9 @@ const Contacts = () => {
     searchText,
     deletingContacts,
   } = useSelector((state) => state.contacts)
+  const [isOpenCreate, { open: openCreate, close: closeCreate }] =
+    useDisclosure(false)
+  const { email } = useSelector((state) => state.user)
   const [uploading, setUploading] = useState(false)
   const [loading, setLoading] = useState(false)
   const [filter, setFilter] = useState({ field: '', operator: '', value: '' })
@@ -42,6 +56,10 @@ const Contacts = () => {
   const inputFile = useRef()
   const inputExport = useRef()
   const dispatch = useDispatch()
+
+  const [newUserEmail, setNewUserEmail] = useState('')
+  const [newUserPassword, setNewUserPassword] = useState('')
+
   const submitFile = (e) => {
     if (!e.target.files) return
     const file = e.target.files[0]
@@ -106,6 +124,13 @@ const Contacts = () => {
     dispatch(deleteManyContacts({ ids: selected }))
   }
 
+  const handleSubmitUser = async () => {
+    if (!newUserEmail && !newUserPassword) return
+    dispatch(
+      insertUser({ email: newUserEmail, password: newUserPassword })
+    ).finally(() => closeCreate())
+  }
+
   useEffect(() => {
     setFilter({
       field: 'fullname',
@@ -118,8 +143,70 @@ const Contacts = () => {
     <div className="p-1">
       <div className="flex items-center justify-between">
         <img className="w-10" src={Flash} />
-        <div>
-          <AccountCircle onClick={inline} />
+        <div className="flex">
+          <Menu shadow="md" width={200}>
+            <Menu.Target>
+              <div className="flex items-center cursor-pointer">
+                <p className="mr-3">{email}</p>
+                <AccountCircle onClick={inline} className="cursor-pointer" />
+              </div>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item icon={<Logout />} onClick={() => dispatch(logout())}>
+                Log out
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+          <button
+            onClick={openCreate}
+            className="bg-blue-500 px-2 py-2 text-white rounded-md ml-3"
+          >
+            <PersonAdd />
+          </button>
+          <Dialog open={isOpenCreate} onClose={closeCreate}>
+            <DialogTitle>S'enregistrer</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Email"
+                type="email"
+                value={newUserEmail}
+                onChange={(e) => setNewUserEmail(e.target.value)}
+                required
+                fullWidth
+                variant="standard"
+              />
+
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Mot de passe"
+                type="password"
+                value={newUserPassword}
+                onChange={(e) => setNewUserPassword(e.target.value)}
+                required
+                fullWidth
+                variant="standard"
+              />
+            </DialogContent>
+            <DialogActions>
+              <button
+                className="bg-blue-500 text-white font-bold px-5 py-2"
+                onClick={closeCreate}
+              >
+                Fermer
+              </button>
+              <button
+                className="bg-blue-500 text-white font-bold px-5 py-2"
+                onClick={handleSubmitUser}
+              >
+                Valider
+              </button>
+            </DialogActions>
+          </Dialog>
         </div>
       </div>
       <hr className="mb-4" />
