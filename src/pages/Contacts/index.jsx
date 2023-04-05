@@ -162,7 +162,7 @@ const Contacts = () => {
               className="mr-2"
             />
             <a
-              href={`http://localhost:4000/contacts/excel?field=${filter.field}&operator=${filter.operator}&value=${filter.value}`}
+              href={`http://${window.location.hostname}:3000/contacts/excel?field=${filter.field}&operator=${filter.operator}&value=${filter.value}`}
               target="_blank"
             >
               Exporter

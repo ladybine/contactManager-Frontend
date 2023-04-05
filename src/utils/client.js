@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const client = () => {
   const instance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: `http://${window.location.hostname}:3000`,
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
