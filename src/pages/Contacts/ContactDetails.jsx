@@ -191,7 +191,7 @@ function ContactDetails({ contact }) {
         disabled={!hasChanges}
         onClick={() => submit()}
       >
-        Enregistrer{' '}
+        Save{' '}
         {loading && (
           <span className="ml-2">
             <CircularProgress style={{ color: 'white' }} size={20} />

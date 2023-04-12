@@ -164,7 +164,7 @@ const Contacts = () => {
             <PersonAdd />
           </button>
           <Dialog open={isOpenCreate} onClose={closeCreate}>
-            <DialogTitle>S'enregistrer</DialogTitle>
+            <DialogTitle>Sign up</DialogTitle>
             <DialogContent>
               <TextField
                 autoFocus
@@ -183,7 +183,7 @@ const Contacts = () => {
                 autoFocus
                 margin="dense"
                 id="name"
-                label="Mot de passe"
+                label="password"
                 type="password"
                 value={newUserPassword}
                 onChange={(e) => setNewUserPassword(e.target.value)}
@@ -197,13 +197,13 @@ const Contacts = () => {
                 className="bg-blue-500 text-white font-bold px-5 py-2"
                 onClick={closeCreate}
               >
-                Fermer
+                Close
               </button>
               <button
                 className="bg-blue-500 text-white font-bold px-5 py-2"
                 onClick={handleSubmitUser}
               >
-                Valider
+                Validate
               </button>
             </DialogActions>
           </Dialog>
@@ -222,12 +222,12 @@ const Contacts = () => {
             onClick={open}
           >
             <FontAwesomeIcon icon={faAdd} color="white" className="mr-2" />
-            Ajouter un contact
+            Add a contact
           </button>
           <Drawer
             opened={opened}
             onClose={close}
-            title={'Ajouter un nouveau contact'}
+            title={'Add a new contact'}
             position="right"
             transitionProps={{
               duration: 500,
@@ -245,7 +245,7 @@ const Contacts = () => {
               color="white"
               className="mr-2"
             />
-            {uploading ? 'Chargement...' : 'Importer un fichier'}
+            {uploading ? 'Loading...' : 'Import a file'}
           </label>
           <input
             className="hidden"
@@ -263,10 +263,10 @@ const Contacts = () => {
               className="mr-2"
             />
             <a
-              href={`http://localhost:4000/contacts/excel?field=${filter.field}&operator=${filter.operator}&value=${filter.value}`}
+              href={`http://${window.location.hostname}:4000/contacts/excel?field=${filter.field}&operator=${filter.operator}&value=${filter.value}`}
               target="_blank"
             >
-              Exporter
+              Export
             </a>
             {/* {uploading ? 'Chargement...' : 'Importer un fichier'} */}
           </label>
@@ -344,7 +344,7 @@ const Contacts = () => {
                     color="white"
                     className="mr-2"
                   />
-                  Supprimer{' '}
+                  Delete{' '}
                   {Array.isArray(selected) &&
                     selected.length > 0 &&
                     `(${selected.length})`}

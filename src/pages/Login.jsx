@@ -22,11 +22,11 @@ const Login = () => {
         <div className="text-center">
           <img className="mx-auto w-40" src={Flash} alt="logo" />
           <h4 className="text-xl font-semibold mt-1 mb-6 pb-1">
-            Gestion des contacts
+            Contact management
           </h4>
         </div>
         <form className="w-full" onSubmit={submit}>
-          <p className="mb-2">Veuillez-vous connecter</p>
+          <p className="mb-2">Please connect</p>
           <div className="mb-2">
             <input
               type="email"
@@ -68,7 +68,7 @@ const Login = () => {
                     fill="currentFill"
                   />
                 </svg>
-                <span className="sr-only">Chargement...</span>
+                <span className="sr-only">loading...</span>
               </div>
             ) : (
               <button
@@ -86,7 +86,7 @@ const Login = () => {
                   )`,
                 }}
               >
-                Se connecter
+                Login
               </button>
             )}
           </div>
@@ -101,8 +101,8 @@ const Login = () => {
         <div className="text-white px-4 py-6 md:p-12 md:mx-6 items-center justify-center">
           <h4 className="text-xl font-semibold mb-12">FlashContacts</h4>
           <p className="text-sm">
-            FlashContacts est votre carnet d'adresses en ligne, qui integre
-            plusieur fonctionalité
+            FlashContacts is your online address book, which integrates several
+            features
           </p>
         </div>
       </div>

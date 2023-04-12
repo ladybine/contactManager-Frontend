@@ -20,6 +20,7 @@ import {
 } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { addContacts } from '../../features/contacts/action'
+import { Pays } from './Pays'
 
 export default function AddContact() {
   const dispatch = useDispatch()
@@ -72,6 +73,7 @@ export default function AddContact() {
     setProvince('')
   }
 
+ 
   return (
     <div>
       <Box
@@ -155,7 +157,7 @@ export default function AddContact() {
         />
         <TextField
           id="input-with-icon-textfield"
-          label="Téléphone"
+          label="Phone"
           value={phones}
           onChange={(e) => setPhones(e.target.value)}
           InputProps={{
@@ -169,7 +171,7 @@ export default function AddContact() {
         />
         <TextField
           id="input-with-icon-textfield"
-          label="Categorie"
+          label="Category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           InputProps={{
@@ -195,9 +197,11 @@ export default function AddContact() {
           }}
           variant="standard"
         />
+
         <TextField
           id="input-with-icon-textfield"
-          label="Pays"
+          label="Country"
+          select
           value={country}
           onChange={(e) => setCountry(e.target.value)}
           InputProps={{
@@ -207,8 +211,17 @@ export default function AddContact() {
               </InputAdornment>
             ),
           }}
+          SelectProps={{
+            native: true,
+          }}
           variant="standard"
-        />
+        >
+          {Pays.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </TextField>
 
         <TextField
           id="input-with-icon-textfield"
@@ -226,7 +239,7 @@ export default function AddContact() {
         />
         <TextField
           id="input-with-icon-textfield"
-          label="Ville"
+          label="Town"
           value={town}
           onChange={(e) => setTown(e.target.value)}
           InputProps={{
@@ -268,7 +281,7 @@ export default function AddContact() {
         />
         <TextField
           id="input-with-icon-textfield"
-          label="Groupe"
+          label="Group"
           value={groupe}
           onChange={(e) => setGroupe(e.target.value)}
           InputProps={{
@@ -282,7 +295,7 @@ export default function AddContact() {
         />
         <TextField
           id="input-with-icon-textfield"
-          label="flashApId"
+          label="flashApp Id"
           value={flashApId}
           onChange={(e) => setFlashApId(e.target.value)}
           InputProps={{
@@ -301,7 +314,7 @@ export default function AddContact() {
       >
         <PermIdentityOutlinedIcon />
         <FontAwesomeIcon icon={faAdd} color="white" className="mr-2" />
-        Enregistrer
+        Save
       </button>
     </div>
   )
