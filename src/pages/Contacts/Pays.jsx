@@ -32,10 +32,6 @@ export const Pays = [
     label: 'Angola',
   },
   {
-    value: 'Angola',
-    label: 'Angola',
-  },
-  {
     value: 'Antigua-et-Barbuda',
     label: 'Antigua-et-Barbuda',
   },

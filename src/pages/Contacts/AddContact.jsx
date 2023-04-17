@@ -72,8 +72,26 @@ export default function AddContact() {
     setCategory('')
     setProvince('')
   }
-
- 
+  const statusTable = [
+    {
+      value: 'FlashApp User',
+      label: 'FlashApp',
+    },
+    { value: 'Flash Agent', label: 'Flash Agent' },
+    { value: 'Flash Marchand', label: 'Flash Marchand' },
+    { value: 'Flash Sub-agency', label: 'Flash Sub-agency' },
+    { value: 'Client', label: 'Client' },
+  ]
+  const groupeTable = [
+    { value: 'List mailings', label: 'List mailings' },
+    { value: 'List Sub agent', label: 'List Sub agent' },
+    { value: 'List Partners', label: 'List Partners' },
+  ]
+  const caterogyTable = [
+    { value: 'G1', label: 'G1' },
+    { value: 'G2', label: 'G2' },
+    { value: 'G3', label: 'G3' },
+  ]
   return (
     <div>
       <Box
@@ -172,6 +190,7 @@ export default function AddContact() {
         <TextField
           id="input-with-icon-textfield"
           label="Category"
+          select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           InputProps={{
@@ -181,8 +200,17 @@ export default function AddContact() {
               </InputAdornment>
             ),
           }}
+          SelectProps={{
+            native: true,
+          }}
           variant="standard"
-        />
+        >
+          {caterogyTable.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </TextField>
         <TextField
           id="input-with-icon-textfield"
           label="Compagny"
@@ -268,6 +296,7 @@ export default function AddContact() {
         <TextField
           id="input-with-icon-textfield"
           label="Status"
+          select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
           InputProps={{
@@ -277,11 +306,21 @@ export default function AddContact() {
               </InputAdornment>
             ),
           }}
+          SelectProps={{
+            native: true,
+          }}
           variant="standard"
-        />
+        >
+          {statusTable.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </TextField>
         <TextField
           id="input-with-icon-textfield"
           label="Group"
+          select
           value={groupe}
           onChange={(e) => setGroupe(e.target.value)}
           InputProps={{
@@ -291,8 +330,17 @@ export default function AddContact() {
               </InputAdornment>
             ),
           }}
+          SelectProps={{
+            native: true,
+          }}
           variant="standard"
-        />
+        >
+          {groupeTable.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </TextField>
         <TextField
           id="input-with-icon-textfield"
           label="flashApp Id"

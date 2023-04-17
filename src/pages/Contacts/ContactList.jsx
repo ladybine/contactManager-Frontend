@@ -97,6 +97,8 @@ const columns = [
     headerName: 'Category',
     minWidth: 120,
     editable: true,
+    type: 'singleSelect',
+    valueOptions: ['G1', 'G2', 'G3'],
   },
   {
     field: 'company',
@@ -321,12 +323,22 @@ const columns = [
     headerName: 'Status',
     editable: true,
     minWidth: 120,
+    type: 'singleSelect',
+    valueOptions: [
+      'FlashApp User',
+      'Flash Agent',
+      'Flash Marchand',
+      'Flash Sub-agency',
+      'Client',
+    ],
   },
   {
     field: 'groupe',
     headerName: 'Group',
     minWidth: 120,
     editable: true,
+    type: 'singleSelect',
+    valueOptions: ['List mailings', 'List Sub agent', 'List Partners'],
   },
   {
     field: 'flashApId',
