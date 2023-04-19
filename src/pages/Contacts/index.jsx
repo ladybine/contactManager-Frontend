@@ -48,6 +48,8 @@ const Contacts = () => {
   } = useSelector((state) => state.contacts)
   const [isOpenCreate, { open: openCreate, close: closeCreate }] =
     useDisclosure(false)
+  const [isOpenCreateLibeller, { open: openLibeller, close: closeLibeller }] =
+    useDisclosure(false)
   const { email } = useSelector((state) => state.user)
   const [uploading, setUploading] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -59,6 +61,7 @@ const Contacts = () => {
 
   const [newUserEmail, setNewUserEmail] = useState('')
   const [newUserPassword, setNewUserPassword] = useState('')
+  const [newLibeller, setNewlibeller] = useState('')
 
   const submitFile = (e) => {
     if (!e.target.files) return
@@ -130,6 +133,7 @@ const Contacts = () => {
       insertUser({ email: newUserEmail, password: newUserPassword })
     ).finally(() => closeCreate())
   }
+  const handleSubmitLibelé = async () => {}
 
   useEffect(() => {
     setFilter({
@@ -303,6 +307,44 @@ const Contacts = () => {
         </div>
 
         <div className="flex">
+          <button
+            onClick={openLibeller}
+            className="bg-blue-500 px-2 py-2 text-white rounded-md mr-3"
+          >
+            +Libellé
+          </button>
+          <Dialog open={isOpenCreateLibeller} onClose={closeLibeller}>
+            <DialogTitle>Creer un libellé</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label=""
+                type="text"
+                value={newLibeller}
+                onChange={(e) => setNewlibeller(e.target.value)}
+                placeholder="Nouveau libellé"
+                required
+                fullWidth
+                variant="standard"
+              />
+            </DialogContent>
+            <DialogActions>
+              <button
+                className="bg-blue-500 text-white font-bold px-5 py-1"
+                onClick={closeLibeller}
+              >
+                Close
+              </button>
+              <button
+                className="bg-blue-500 text-white font-bold px-5 py-1"
+                onClick={handleSubmitLibelé}
+              >
+                Validate
+              </button>
+            </DialogActions>
+          </Dialog>
           <button
             className="bg-blue-600 px-4 py-2 text-white rounded-md mr-4"
             onClick={handleclean}
