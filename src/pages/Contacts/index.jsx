@@ -34,7 +34,7 @@ import {
 } from '@mui/material'
 import Flash from '../../assets/flash.png'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import { isInline } from '../../features/user/actions'
+import { getCurrentUser } from '../../features/user/actions'
 import { Logout, PersonAdd } from '@mui/icons-material'
 import { insertUser } from '../../features/user/actions'
 import { logout } from '../../features/user/userSlice'
@@ -83,7 +83,7 @@ const Contacts = () => {
   }
 
   const inline = () => {
-    dispatch(isInline()).finally()
+    dispatch(getCurrentUser()).finally()
   }
 
   const exportFile = (e) => {
@@ -152,7 +152,7 @@ const Contacts = () => {
             <Menu.Target>
               <div className="flex items-center cursor-pointer">
                 <p className="mr-3">{email}</p>
-                <AccountCircle onClick={inline} className="cursor-pointer" />
+                <AccountCircle className="cursor-pointer" />
               </div>
             </Menu.Target>
             <Menu.Dropdown>
@@ -289,7 +289,7 @@ const Contacts = () => {
         <div className="relative w-[30%]">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
-              ariaHidden="true"
+              aria-hidden="true"
               className="w-5 h-5 text-gray-500 dark:text-gray-400"
               fill="currentColor"
               viewBox="0 0 20 20"

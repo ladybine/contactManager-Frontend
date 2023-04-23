@@ -15,7 +15,7 @@ export const insertUser = createAsyncThunk(
     return data
   }
 )
-export const isInline = createAsyncThunk('user/inline', async () => {
-  const { data } = await client().get('/users/inline')
+export const getCurrentUser = createAsyncThunk('user/current', async () => {
+  const { data } = await client().get('/users/current')
   return data
 })

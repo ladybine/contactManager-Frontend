@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginUser, insertUser, isInline } from './actions'
+import { loginUser, insertUser, getCurrentUser } from './actions'
 
 const initialState = {
   authenticated: false,
+  authorizing: true,
   email: '',
   token: null,
 }
@@ -11,7 +12,8 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    logout: (state, action) => {
+    logout: (state) => {
+      localStorage.clear()
       state.authenticated = false
     },
   },
@@ -20,7 +22,6 @@ export const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.authenticated = true
         const { access_token, user } = action.payload
-        console.log(action.payload)
         state.token = access_token
         state.email = user.email
         localStorage.setItem('token', access_token)
@@ -32,9 +33,16 @@ export const userSlice = createSlice({
         state.token = access_token
         localStorage.setItem('token', access_token)
       })
-      .addCase(isInline.fulfilled, (state, action) => {
+      .addCase(getCurrentUser.pending, (state, action) => {
+        state.authorizing = true
+      })
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.authorizing = false
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
         state.data = action.payload
-        console.log(action.payload)
+        state.authenticated = true
+        state.authorizing = false
       })
   },
 })
