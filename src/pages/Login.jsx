@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Flash from '../assets/flash.png'
 import { loginUser } from '../features/user/actions'
+import { toast } from 'react-toastify'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -10,10 +11,17 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    dispatch(loginUser({ email, password })).finally(() => setLoading(false))
+    try {
+      await dispatch(loginUser({ email, password })).unwrap();
+    } catch (error) {
+      toast.error(`${error}`)
+    } finally {
+      setLoading(false)
+    }
+
   }
 
   return (

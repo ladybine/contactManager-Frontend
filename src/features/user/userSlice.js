@@ -22,7 +22,6 @@ export const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.authenticated = true
         const { access_token, user } = action.payload
-        state.token = access_token
         state.email = user.email
         localStorage.setItem('token', access_token)
       })
