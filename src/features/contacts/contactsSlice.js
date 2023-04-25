@@ -10,7 +10,7 @@ import {
 } from './action'
 
 const initialState = {
-  data: null,
+  data: [],
   selected: [],
   searchText: '',
   deletingContacts: false,

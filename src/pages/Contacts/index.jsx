@@ -39,7 +39,7 @@ import { Logout, PersonAdd } from '@mui/icons-material'
 import { insertUser } from '../../features/user/actions'
 import { logout } from '../../features/user/userSlice'
 
-const Contacts = () => {
+export const Contacts = () => {
   const {
     data: contacts,
     selected,
@@ -133,7 +133,7 @@ const Contacts = () => {
       insertUser({ email: newUserEmail, password: newUserPassword })
     ).finally(() => closeCreate())
   }
-  const handleSubmitLibelé = async () => {}
+  const handleSubmitLibele = async () => {}
 
   useEffect(() => {
     setFilter({
@@ -339,7 +339,7 @@ const Contacts = () => {
               </button>
               <button
                 className="bg-blue-500 text-white font-bold px-5 py-1"
-                onClick={handleSubmitLibelé}
+                onClick={handleSubmitLibele}
               >
                 Validate
               </button>
@@ -407,5 +407,3 @@ const Contacts = () => {
     </div>
   )
 }
-
-export default Contacts

@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginUser, insertUser, getCurrentUser } from './actions'
+import { loginUser, insertUser, getCurrentUser, getAllUsers, getAllLibelles, createLibelle } from './actions'
 
 const initialState = {
+  data: null,
+  users: [],
+  libelles: [],
   authenticated: false,
   authorizing: true,
   email: '',
@@ -20,17 +23,14 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.authenticated = true
         const { access_token, user } = action.payload
         state.email = user.email
+        state.data = user
         localStorage.setItem('token', access_token)
+        state.authenticated = true
       })
       .addCase(insertUser.fulfilled, (state, action) => {
-        state.authenticated = true
-        const { access_token } = action.payload
-        console.log(action.payload)
-        state.token = access_token
-        localStorage.setItem('token', access_token)
+        state.users = [...state.users, action.payload]
       })
       .addCase(getCurrentUser.pending, (state, action) => {
         state.authorizing = true
@@ -40,8 +40,18 @@ export const userSlice = createSlice({
       })
       .addCase(getCurrentUser.fulfilled, (state, action) => {
         state.data = action.payload
+        state.email = state.data.email
         state.authenticated = true
         state.authorizing = false
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.users = action.payload
+      })
+      .addCase(getAllLibelles.fulfilled, (state, action) => {
+        state.libelles = action.payload
+      })
+      .addCase(createLibelle.fulfilled, (state, action) => {
+        state.libelles = [...state.libelles, action.payload]
       })
   },
 })

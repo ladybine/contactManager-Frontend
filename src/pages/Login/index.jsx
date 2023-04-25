@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import Flash from '../assets/flash.png'
-import { loginUser } from '../features/user/actions'
+import Flash from '../../assets/flash.png'
 import { toast } from 'react-toastify'
+import { loginUser } from '../../features/user/actions'
 
 const Login = () => {
   const dispatch = useDispatch()
