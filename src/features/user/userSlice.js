@@ -51,7 +51,14 @@ export const userSlice = createSlice({
         state.libelles = action.payload
       })
       .addCase(createLibelle.fulfilled, (state, action) => {
-        state.libelles = [...state.libelles, action.payload]
+        const uniqueNames = {}
+        state.libelles = [...state.libelles, action.payload].filter((obj) => {
+          if (!uniqueNames[obj.name]) {
+            uniqueNames[obj.name] = true
+            return true
+          }
+          return false
+        })
       })
   },
 })

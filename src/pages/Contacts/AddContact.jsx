@@ -27,14 +27,14 @@ export default function AddContact() {
   const [first_name, setFirst_name] = useState('')
   const [middle_name, setMiddle_name] = useState('')
   const [last_name, setLast_name] = useState('')
-  const [emails, setEmails] = useState([''])
+  const [emails, setEmails] = useState([])
   const [country, setCountry] = useState('')
   const [town, setTown] = useState('')
   const [adress, setAdress] = useState('')
   const [company, setCompany] = useState('')
   const [groupe, setGroupe] = useState('')
   const [flashApId, setFlashApId] = useState('')
-  const [phones, setPhones] = useState([''])
+  const [phones, setPhones] = useState([])
   const [status, setStatus] = useState('')
   const [category, setCategory] = useState('')
   const [province, setProvince] = useState('')
@@ -60,7 +60,7 @@ export default function AddContact() {
       setFirst_name('')
     setMiddle_name('')
     setLast_name('')
-    setEmails('')
+    setEmails([])
     setCountry('')
     setTown('')
     setAdress('')
@@ -68,7 +68,7 @@ export default function AddContact() {
     setGroupe('')
     setFlashApId('')
     setStatus('')
-    setPhones('')
+    setPhones([])
     setCategory('')
     setProvince('')
   }
@@ -163,7 +163,7 @@ export default function AddContact() {
           id="input-with-icon-textfield"
           label="Email"
           value={emails}
-          onChange={(e) => setEmails(e.target.value)}
+          onChange={(e) => setEmails([e.target.value])}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -177,7 +177,7 @@ export default function AddContact() {
           id="input-with-icon-textfield"
           label="Phone"
           value={phones}
-          onChange={(e) => setPhones(e.target.value)}
+          onChange={(e) => setPhones([e.target.value])}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

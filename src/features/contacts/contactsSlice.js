@@ -14,6 +14,7 @@ const initialState = {
   selected: [],
   searchText: '',
   deletingContacts: false,
+  loadingContact: false
 }
 
 export const contactsSlice = createSlice({
@@ -34,9 +35,23 @@ export const contactsSlice = createSlice({
       })
       .addCase(getAllContacts.fulfilled, (state, action) => {
         state.data = action.payload
+        state.loadingContact = false
+      })
+      .addCase(getAllContacts.pending, (state) => {
+        state.loadingContact = true
+      })
+      .addCase(getAllContacts.rejected, (state) => {
+        state.loadingContact = false
+      })
+      .addCase(clean.pending, (state) => {
+        state.loadingContact = true;
+      })
+      .addCase(clean.rejected, (state) => {
+        state.loadingContact = false;
       })
       .addCase(clean.fulfilled, (state, action) => {
         state.data = action.payload
+        state.loadingContact = false;
       })
       .addCase(exportFile.fulfilled, (state, action) => {
         state.data = action.payload
