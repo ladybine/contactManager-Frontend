@@ -87,7 +87,12 @@ export const columns = [
     header: 'Category',
     minWidth: 120,
     enableEditing: true,
-    type: 'singleSelect',
+    editVariant: 'select',
+    editSelectOptions: [
+      { text: 'G1', value: 'G1' },
+      { text: 'G2', value: 'G2' },
+      { text: 'G3', value: 'G3' },
+    ],
     valueOptions: ['G1', 'G2', 'G3'],
   },
   {
@@ -107,8 +112,8 @@ export const columns = [
     header: 'Country',
     enableEditing: true,
     minWidth: 120,
-    type: 'singleSelect',
-    valueOptions: countries,
+    editVariant: 'select',
+    editSelectOptions: countries,
   },
   {
     accessorKey: 'province',
@@ -133,8 +138,8 @@ export const columns = [
     header: 'Status',
     enableEditing: true,
     minWidth: 120,
-    type: 'singleSelect',
-    valueOptions: [
+    editVariant: 'select',
+    editSelectOptions: [
       'FlashApp User',
       'Flash Agent',
       'Flash Marchand',
@@ -147,8 +152,8 @@ export const columns = [
     header: 'Group',
     minWidth: 120,
     enableEditing: true,
-    type: 'singleSelect',
-    valueOptions: ['List mailings', 'List Sub agent', 'List Partners'],
+    editVariant: 'select',
+    editSelectOptions: ['List mailings', 'List Sub agent', 'List Partners'],
   },
   {
     accessorKey: 'flashApId',
