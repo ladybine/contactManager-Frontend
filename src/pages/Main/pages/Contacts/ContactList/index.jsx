@@ -58,6 +58,8 @@ const ContactList = () => {
     searchText,
   } = useSelector((state) => state.contacts)
 
+  const { data: user } = useSelector((state) => state.user)
+
   const [rowSelection, setRowSelection] = useState({})
 
   const [selectedId, setSelectedId] = useState()
@@ -181,7 +183,7 @@ const ContactList = () => {
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <div className="[&>*]:mr-4 my-4 px-4">
-        {Object.values(rowSelection).length > 0 && (
+        {user.role != 'user' && Object.values(rowSelection).length > 0 && (
           <button
             className="bg-red-600 px-4 py-2 text-white rounded-md ml-3"
             onClick={deleteContacts}
@@ -219,20 +221,24 @@ const ContactList = () => {
         getRowId={(row) => row.id}
         enableFilters={true}
         enableGrouping={true}
-        enableEditing={true}
+        enableEditing={user.role != 'user'}
         onEditingRowSave={handleSaveRowEdits}
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
-            <Tooltip arrow placement="left" title="Edit">
-              <IconButton onClick={() => table.setEditingRow(row)}>
-                <Edit />
-              </IconButton>
-            </Tooltip>
-            <Tooltip arrow placement="right" title="Delete">
-              <IconButton color="error" onClick={() => handleDeleteRow(row)}>
-                <Delete />
-              </IconButton>
-            </Tooltip>
+            {user.role != 'user' && (
+              <Tooltip arrow placement="left" title="Edit">
+                <IconButton onClick={() => table.setEditingRow(row)}>
+                  <Edit />
+                </IconButton>
+              </Tooltip>
+            )}
+            {user.role != 'user' && (
+              <Tooltip arrow placement="right" title="Delete">
+                <IconButton color="error" onClick={() => handleDeleteRow(row)}>
+                  <Delete />
+                </IconButton>
+              </Tooltip>
+            )}
           </Box>
         )}
         enableGlobalFilter={false}

@@ -46,3 +46,11 @@ export const getAllLibelles = createAsyncThunk('user/libelles', async () => {
   const { data } = await client().get('/libelle')
   return data
 })
+
+export const deleteManyUsers = createAsyncThunk(
+  'user/delete',
+  async ({ emails }) => {
+    const { data } = await client().delete('/users', { data: { emails } })
+    return data
+  }
+)

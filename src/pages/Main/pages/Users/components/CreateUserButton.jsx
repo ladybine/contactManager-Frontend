@@ -1,6 +1,6 @@
 import { useDisclosure } from '@mantine/hooks'
 import { Button } from '@material-tailwind/react'
-import { Add } from '@mui/icons-material'
+import { Add, Visibility, VisibilityOff } from '@mui/icons-material'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { insertUser } from '../../../../../features/user/actions'
@@ -14,6 +14,9 @@ import {
   DialogTitle,
   Select,
   MenuItem,
+  InputAdornment,
+  IconButton,
+  Input,
 } from '@mui/material'
 
 const CreateUserButton = () => {
@@ -21,6 +24,9 @@ const CreateUserButton = () => {
 
   const [isOpenCreate, { open: openCreate, close: closeCreate }] =
     useDisclosure(false)
+
+   const [showPassword, setShowPassword] = useState(false)
+   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   const [name, setName] = useState('')
   const [role, setRole] = useState('admin')
@@ -42,7 +48,7 @@ const CreateUserButton = () => {
   return (
     <>
       <Button className="mt-5" onClick={openCreate}>
-        <Add /> Ajouter un utilisateur
+        <Add /> Create New User
       </Button>
       <Dialog open={isOpenCreate} onClose={closeCreate}>
         <DialogTitle>Sign up</DialogTitle>
@@ -63,7 +69,7 @@ const CreateUserButton = () => {
             margin="dense"
             id="name"
             label="Email"
-            type='email'
+            type="email"
             value={newUserEmail}
             onChange={(e) => setNewUserEmail(e.target.value)}
             required
@@ -84,17 +90,28 @@ const CreateUserButton = () => {
             </Select>
           </div>
 
-          <TextField
+          <Input
             autoFocus
             margin="dense"
             id="name"
             label="password"
-            type="password"
             value={newUserPassword}
             onChange={(e) => setNewUserPassword(e.target.value)}
             required
             fullWidth
             variant="standard"
+            type={showPassword ? 'text' : 'password'}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
           />
         </DialogContent>
         <DialogActions>

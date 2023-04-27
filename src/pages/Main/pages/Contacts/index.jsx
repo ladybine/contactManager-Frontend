@@ -9,11 +9,13 @@ import { Button } from '@material-tailwind/react'
 import ImportFile from './components/ImportFile'
 import ContactList from './ContactList'
 import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { clean } from '../../../../features/contacts/action'
 
 const Contacts = () => {
   const dispatch = useDispatch()
+
+  const { data: user } = useSelector((state) => state.user)
 
   const handleclean = () => {
     dispatch(clean()).finally(() => {
@@ -27,14 +29,16 @@ const Contacts = () => {
         <SearchInput />
         <div className="ml-6">
           <ImportFile />
-          <Button
-            onClick={handleclean}
-            variant="gradient"
-            gradient={{ from: 'indigo', to: 'cyan' }}
-          >
-            <FontAwesomeIcon icon={faBrush} color="white" className="mr-2" />
-            Clean
-          </Button>
+          {user.role != 'user' && (
+            <Button
+              onClick={handleclean}
+              variant="gradient"
+              gradient={{ from: 'indigo', to: 'cyan' }}
+            >
+              <FontAwesomeIcon icon={faBrush} color="white" className="mr-2" />
+              Clean
+            </Button>
+          )}
         </div>
       </div>
       <div className="py-4">

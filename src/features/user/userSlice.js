@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginUser, insertUser, getCurrentUser, getAllUsers, getAllLibelles, createLibelle } from './actions'
+import { loginUser, insertUser, getCurrentUser, getAllUsers, getAllLibelles, createLibelle, deleteManyUsers } from './actions'
 
 const initialState = {
   data: null,
@@ -9,6 +9,7 @@ const initialState = {
   authorizing: true,
   email: '',
   token: null,
+  deletingUsers: false
 }
 
 export const userSlice = createSlice({
@@ -59,6 +60,18 @@ export const userSlice = createSlice({
           }
           return false
         })
+      })
+      .addCase(deleteManyUsers.pending, (state) => {
+        state.deletingUsers = true
+      })
+      .addCase(deleteManyUsers.fulfilled, (state, { payload }) => {
+        state.users = [...state.users].filter(
+          (user) => !payload.includes(user.email)
+        )
+        state.deletingUsers = false
+      })
+      .addCase(deleteManyUsers.rejected, (state) => {
+        state.deletingUsers = false
       })
   },
 })

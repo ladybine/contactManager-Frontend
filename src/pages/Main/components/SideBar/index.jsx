@@ -24,7 +24,7 @@ const SideBar = () => {
 
   return (
     <div className="px-2 py-10 w-full flex flex-col items-center">
-      <CreateContactButton />
+      {user.role != 'user' && <CreateContactButton />}
       <div className="mt-8 w-[70%] [&>*]:mb-6">
         <NavItem
           to="/"
@@ -45,7 +45,7 @@ const SideBar = () => {
           />
         )}
         <div className="flex justify-center w-full">
-          <CreateLibelle />
+          {user.role != 'user' && <CreateLibelle />}
         </div>
         <div className="mt-4">
           {libelles.map((libelle) => (
